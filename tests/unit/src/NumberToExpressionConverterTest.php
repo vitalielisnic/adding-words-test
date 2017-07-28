@@ -44,11 +44,14 @@ class NumberToExpressionConverterTest extends TestCase
     $current = $this->converter->convertThousandsToString(200);
     $this->assertEquals('', $current);
 
-    $current = $this->converter->convertThousandsToString(200);
+    $current = $this->converter->convertThousandsToString(550);
     $this->assertEquals('', $current);
 
     $current = $this->converter->convertThousandsToString(1000);
     $this->assertEquals('one thousand', $current);
+
+    $current = $this->converter->convertThousandsToString(2220);
+    $this->assertEquals('two thousand', $current);
   }
 
   public function testHundredsConversionToString()
@@ -258,5 +261,8 @@ class NumberToExpressionConverterTest extends TestCase
 
     $current = $this->converter->convertNumberToString(561);
     $this->assertEquals('five hundred and sixty one', $current);
+
+    $current = $this->converter->convertNumberToString(3561);
+    $this->assertEquals('three thousand five hundred and sixty one', $current);
   }
 }

@@ -59,6 +59,18 @@ class NumberToExpressionConverter
     return $this->tens_map;
   }
 
+  public function convertThousandsToString($number)
+  {
+    $result = '';
+    $thousands = floor($number / 1000);
+    if ($thousands > 0) {
+      $ones_map = $this->getOnesMap();
+      $result = sprintf('%s thousand', $ones_map[$thousands]);
+    }
+
+    return $result;
+  }
+
   /**
    * @param $number
    * @return string
@@ -66,7 +78,8 @@ class NumberToExpressionConverter
   public function convertHundredsToString($number)
   {
     $result = '';
-    $hundreds = floor($number / 100);
+    $thousands = floor($number / 1000) * 1000;
+    $hundreds = floor(($number - $thousands) / 100);
     if ($hundreds > 0) {
       $ones_map = $this->getOnesMap();
       $result = sprintf('%s hundred', $ones_map[$hundreds]);
@@ -82,8 +95,9 @@ class NumberToExpressionConverter
   public function convertTensToString($number)
   {
     $result = '';
-    $hundreds = floor($number / 100);
-    $tens = $number - $hundreds * 100;
+    $thousands = floor($number / 1000) * 1000;
+    $hundreds = floor(($number - $thousands) / 100) * 100;
+    $tens = $number - $thousands - $hundreds;
 
     if ($tens > 20 || $tens < 10) {
       $tens = floor($tens / 10) * 10;
@@ -104,9 +118,10 @@ class NumberToExpressionConverter
   public function convertOnesToString($number)
   {
     $result = '';
-    $hundreds = floor($number / 100) * 100;
-    $tens = floor(($number - $hundreds) / 10) * 10;
-    $ones = $number - $hundreds - $tens;
+    $thousands = floor($number / 1000) * 1000;
+    $hundreds = floor(($number - $thousands) / 100) * 100;
+    $tens = floor(($number - $thousands - $hundreds) / 10) * 10;
+    $ones = $number - $thousands - $hundreds - $tens;
 
     if ($ones > 0 && ($tens >= 20 || $tens == 0)) {
       $ones_map = $this->getOnesMap();
@@ -122,11 +137,16 @@ class NumberToExpressionConverter
    */
   public function convertNumberToString($number)
   {
+    $thousands = $this->convertThousandsToString($number);
     $hundreds = $this->convertHundredsToString($number);
     $tens = $this->convertTensToString($number);
     $ones = $this->convertOnesToString($number);
 
     $result = [];
+
+    if ($thousands != '') {
+      $result[] = $thousands;
+    }
 
     if ($hundreds != '') {
       $result[] = $hundreds;
