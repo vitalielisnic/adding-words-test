@@ -1,0 +1,20 @@
+{
+    "name": "vitalielisnic/adding-words-test",
+    "require": {
+        "phpunit/phpunit": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arith\\": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "authors": [
+        {
+            "name": "Vitalie Lisnic",
+            "email": "vitalie.lisnic@ellation.com"
+        }
+    ]
+}

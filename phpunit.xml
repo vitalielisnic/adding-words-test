@@ -1,0 +1,22 @@
+<phpunit
+  colors="true"
+  strict-coverage="true"
+  verbose="true"
+  debug="true"
+  bootstrap="tests/unit/bootstrap.php">
+  <testsuites>
+    <testsuite name="default">
+      <directory>tests/unit</directory>
+    </testsuite>
+  </testsuites>
+  <filter>
+    <blacklist>
+      <exclude>
+        <directory>vendor</directory>
+      </exclude>
+    </blacklist>
+  </filter>
+  <php>
+    <ini name="display_errors" value="true"/>
+  </php>
+</phpunit>
