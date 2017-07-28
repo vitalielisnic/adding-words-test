@@ -15,12 +15,18 @@ class Arith
   private $number_to_expression_converter;
 
   /**
+   * @var int $init_value
+   */
+  private $init_value;
+
+  /**
    * Arith constructor.
    */
-  public function __construct($init_value = "zero")
+  public function __construct($init_value_expression = "zero")
   {
     $this->expression_evaluator = new ExpressionEvaluator();
     $this->number_to_expression_converter = new NumberToExpressionConverter();
+    $this->init_value = $this->expression_evaluator->evaluate($init_value_expression);
   }
 
   /**
@@ -45,12 +51,20 @@ class Arith
    */
   public function add($expression)
   {
-    $calculator = new Calculator();
+    $calculator = new Calculator($this->init_value);
     $number_to_expression_converter = $this->getNumberToExpressionConverter();
     $expression_evaluator = $this->getExpressionEvaluator();
     $number_to_add = $expression_evaluator->evaluate($expression);
     $calculator_state = $calculator->add($number_to_add);
 
     return $number_to_expression_converter->convertNumberToString($calculator_state);
+  }
+
+  /**
+   * @return int
+   */
+  public function getInitValue()
+  {
+    return $this->init_value;
   }
 }

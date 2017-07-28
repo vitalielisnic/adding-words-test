@@ -13,18 +13,12 @@ class ArithTest extends TestCase
 
   public function setup()
   {
-    $this->arith = new Arith('zero');
+    $this->arith = new Arith('five hundred and twelve');
   }
 
   public function testGetExpressionEvaluator()
   {
     $this->assertInstanceOf('Arith\ExpressionEvaluator', $this->arith->getExpressionEvaluator());
-  }
-
-  public function testGetCalculator()
-  {
-    $current = $this->arith->getCalculator();
-    $this->assertInstanceOf('Arith\Calculator', $current);
   }
 
   public function testGetNumberToExpressionConverter()
@@ -33,27 +27,18 @@ class ArithTest extends TestCase
     $this->assertInstanceOf('Arith\NumberToExpressionConverter', $current);
   }
 
-  public function testGetCurrentState()
-  {
-    $current = $this->arith->getCurrentState();
-    $this->assertEquals('', $current);
-
-    $this->arith->getCalculator()->setState(135);
-
-    $current = $this->arith->getCurrentState();
-    $this->assertEquals('one hundred and thirty five', $current);
-
-    $this->arith = new Arith('twenty');
-    $current = $this->arith->getCurrentState();
-    $this->assertEquals('twenty', $current);
-  }
-
   public function testAdd()
   {
     $current = $this->arith->add("one hundred and two");
-    $this->assertEquals("one hundred and two", $current);
+    $this->assertEquals("six hundred and fourteen", $current);
 
     $current = $this->arith->add("two hundred and thirteen");
-    $this->assertEquals("three hundred and fifteen", $current);
+    $this->assertEquals("seven hundred and twenty five", $current);
+  }
+
+  public function testGetInitValue()
+  {
+    $current = $this->arith->getInitValue();
+    $this->assertEquals(512, $current);
   }
 }
