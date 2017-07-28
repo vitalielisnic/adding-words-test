@@ -33,6 +33,24 @@ class NumberToExpressionConverterTest extends TestCase
     $this->assertEquals($expected, $current);
   }
 
+  public function testThousandsConversionToString()
+  {
+    $current = $this->converter->convertThousandsToString(0);
+    $this->assertEquals('', $current);
+
+    $current = $this->converter->convertThousandsToString(10);
+    $this->assertEquals('', $current);
+
+    $current = $this->converter->convertThousandsToString(200);
+    $this->assertEquals('', $current);
+
+    $current = $this->converter->convertThousandsToString(200);
+    $this->assertEquals('', $current);
+
+    $current = $this->converter->convertThousandsToString(1000);
+    $this->assertEquals('one thousand', $current);
+  }
+
   public function testHundredsConversionToString()
   {
     $current = $this->converter->convertHundredsToString(0);
