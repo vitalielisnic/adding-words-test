@@ -59,6 +59,10 @@ class NumberToExpressionConverter
     return $this->tens_map;
   }
 
+  /**
+   * @param $number
+   * @return string
+   */
   public function convertThousandsToString($number)
   {
     $result = '';
